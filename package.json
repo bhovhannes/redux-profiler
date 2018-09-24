@@ -1,6 +1,6 @@
 {
   "name": "redux-profiler",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A Redux store enhancer which uses User Timing API to profile redux actions and time spent on notifying store listeners",
   "main": "dist/redux-profiler.umd.js",
   "module": "dist/redux-profiler.es.js",
@@ -9,7 +9,7 @@
     "index.d.ts"
   ],
   "scripts": {
-		"commit": "commit",
+    "commit": "commit",
     "build": "rollup --config",
     "watch": "npm run build -- -w",
     "prettier": "prettier --write **/*.{ts,tsx,js,css,md}",
