@@ -1,0 +1,9 @@
+.idea/
+.nyc_output/
+coverage/
+dist/
+sandbox/lib/dist/
+node_modules/
+npm-debug.log
+test_results*.xml
+*.iml

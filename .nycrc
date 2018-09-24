@@ -1,0 +1,21 @@
+{
+	"require": [
+		"./mocha-hook.js"
+	],
+	"extension": [
+		".jsx",
+		".js"
+	],
+	"exclude": [
+		"src/**/*.spec.js",
+		"babel.config.js",
+		"mocha-hook.js"
+	],
+	"reporter": [
+		"text",
+		"lcov",
+		"html"
+	],
+	"report-dir": "./coverage",
+	"cache": true
+}

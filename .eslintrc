@@ -1,0 +1,10 @@
+{
+	"parser": "babel-eslint",
+	"extends": ["eslint:recommended", "eslint-config-prettier"],
+	"rules": {
+		"semi": ["error", "never"]
+	},
+	"env": {
+		"browser": true
+	}
+}

@@ -1,0 +1,89 @@
+{
+  "name": "redux-profiler",
+  "version": "0.0.0",
+  "description": "A Redux store enhancer which uses User Timing API to profile redux actions and time spent on notifying store listeners",
+  "main": "dist/redux-profiler.umd.js",
+  "module": "dist/redux-profiler.es.js",
+  "files": [
+    "dist/*",
+    "index.d.ts"
+  ],
+  "scripts": {
+		"commit": "commit",
+    "build": "rollup --config",
+    "watch": "npm run build -- -w",
+    "prettier": "prettier --write **/*.{ts,tsx,js,css,md}",
+    "lint:fix": "npm run lint -- --fix",
+    "pretest": "rimraf ./coverage",
+    "test": "run-s lint test:sources",
+    "lint": "eslint --ext .js .",
+    "test:sources": "nyc npm run test:sources:run",
+    "test:sources:run": "mocha --require ./mocha-hook.js \"src/**/*.spec.js\"",
+    "coverage": "cat coverage/lcov.info | codecov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhovhannes/redux-profiler.git"
+  },
+  "keywords": [
+    "redux",
+    "store",
+    "profile",
+    "react",
+    "timing",
+    "performance",
+    "profiler"
+  ],
+  "author": "Hovhannes Babayan <bhovhannes@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bhovhannes/redux-profiler/issues"
+  },
+  "homepage": "https://github.com/bhovhannes/redux-profiler#readme",
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "npm run lint:fix",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{js,jsx,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "7.0.0",
+    "@babel/plugin-transform-modules-commonjs": "7.1.0",
+    "@babel/register": "7.0.0",
+    "@commitlint/cli": "7.1.2",
+    "@commitlint/config-conventional": "7.1.2",
+    "@commitlint/prompt-cli": "7.1.2",
+    "babel-eslint": "9.0.0",
+    "codecov": "3.1.0",
+    "eslint": "5.6.0",
+    "eslint-config-prettier": "3.1.0",
+    "expect": "23.6.0",
+    "husky": "1.0.0-rc.15",
+    "lint-staged": "7.3.0",
+    "mocha": "5.2.0",
+    "npm-run-all": "4.1.3",
+    "nyc": "13.0.1",
+    "prettier": "1.14.3",
+    "rollup": "0.66.2",
+    "rollup-plugin-babel": "4.0.3",
+    "should": "13.2.3",
+    "sinon": "6.3.4"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  }
+}
