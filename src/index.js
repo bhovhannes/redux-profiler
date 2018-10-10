@@ -32,7 +32,7 @@ function getMarkInfo(action) {
 function getMarkLabel(markInfo, profilerMarkType) {
 	return `\u267B ${markInfo.name} (${
 		markInfo.type.length > 0 ? markInfo.type : profilerMarkType
-		})`
+	})`
 }
 
 function isReduxThunkAction(action) {
@@ -43,17 +43,14 @@ function isReduxAction(action) {
 	return action !== null && typeof action === 'object' && action.type
 }
 
-
-export default function profileStore(options) {
+export default function profileStore(options = {}) {
 	let performance
 	if (options.performance) {
 		performance = options.performance
-	}
-	else if (typeof window !== 'undefined') {
+	} else if (typeof window !== 'undefined') {
 		performance = window.performance
 	}
 
-	
 	const performProfiledOperation = (() => {
 		let counter = 0
 
@@ -82,8 +79,7 @@ export default function profileStore(options) {
 			return res
 		}
 	})()
-	
-	
+
 	let currentListeners = []
 	let nextListeners = currentListeners
 
