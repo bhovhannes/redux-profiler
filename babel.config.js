@@ -1,6 +1,12 @@
 /*eslint-env node*/
 module.exports = {
-	"plugins": [
-		["@babel/plugin-proposal-object-rest-spread"]
-	]
+	presets: [
+		[
+			'@babel/preset-env',
+			{
+				targets: '> 0.25%, not dead'
+			}
+		]
+	],
+	plugins: [['@babel/plugin-proposal-object-rest-spread']]
 }
