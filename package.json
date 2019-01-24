@@ -3,7 +3,7 @@
   "version": "1.0.4",
   "description": "A Redux store enhancer which uses User Timing API to profile redux actions and time spent on notifying store listeners",
   "main": "dist/redux-profiler.umd.js",
-  "module": "dist/redux-profiler.es.js",
+  "module": "dist/redux-profiler.esm.js",
   "files": [
     "dist/*",
     "index.d.ts"
