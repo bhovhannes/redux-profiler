@@ -4,14 +4,12 @@ export default {
 	input: 'src/index.js',
 	output: [
 		{
-			dir: './dist',
-			file: 'redux-profiler.umd.js',
+			file: './dist/redux-profiler.umd.js',
 			format: 'umd',
 			name: 'ReduxProfiler'
 		},
 		{
-			dir: './dist',
-			file: 'redux-profiler.esm.js',
+			file: './dist/redux-profiler.esm.js',
 			format: 'esm'
 		}
 	],
