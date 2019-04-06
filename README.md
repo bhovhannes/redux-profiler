@@ -108,7 +108,7 @@ MIT (http://www.opensource.org/licenses/mit-license.php)
 [npm-url]: https://www.npmjs.org/package/redux-profiler
 [npm-version-image]: https://img.shields.io/npm/v/redux-profiler.svg?style=flat
 [npm-downloads-image]: https://img.shields.io/npm/dm/redux-profiler.svg?style=flat
-[travis-url]: https://travis-ci.org/bhovhannes/redux-profiler
+[travis-url]: https://travis-ci.com/bhovhannes/redux-profiler
 [travis-image]: https://img.shields.io/travis/bhovhannes/redux-profiler.svg?style=flat
 [codecov-url]: https://codecov.io/gh/bhovhannes/redux-profiler
 [codecov-image]: https://img.shields.io/codecov/c/github/bhovhannes/redux-profiler.svg
