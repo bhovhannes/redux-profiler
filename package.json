@@ -67,7 +67,7 @@
     "babel-eslint": "10.0.1",
     "codecov": "3.5.0",
     "eslint": "5.16.0",
-    "eslint-config-prettier": "4.3.0",
+    "eslint-config-prettier": "5.0.0",
     "expect": "24.8.0",
     "husky": "2.4.1",
     "lint-staged": "8.2.1",
