@@ -56,11 +56,11 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "7.7.5",
-    "@babel/plugin-proposal-object-rest-spread": "7.7.4",
+    "@babel/core": "7.7.7",
+    "@babel/plugin-proposal-object-rest-spread": "7.7.7",
     "@babel/plugin-transform-modules-commonjs": "7.7.5",
-    "@babel/preset-env": "7.7.6",
-    "@babel/register": "7.7.4",
+    "@babel/preset-env": "7.7.7",
+    "@babel/register": "7.7.7",
     "@commitlint/cli": "8.2.0",
     "@commitlint/config-conventional": "8.2.0",
     "@commitlint/prompt-cli": "8.2.0",
