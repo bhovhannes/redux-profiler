@@ -76,7 +76,7 @@
     "nyc": "15.0.0",
     "prettier": "1.19.1",
     "rollup": "1.32.1",
-    "rollup-plugin-babel": "4.3.3",
+    "rollup-plugin-babel": "4.4.0",
     "should": "13.2.3",
     "sinon": "9.0.0"
   },
