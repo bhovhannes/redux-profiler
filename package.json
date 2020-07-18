@@ -65,7 +65,7 @@
     "@commitlint/config-conventional": "9.0.1",
     "@commitlint/prompt-cli": "9.0.1",
     "babel-eslint": "10.1.0",
-    "codecov": "3.7.0",
+    "codecov": "3.7.1",
     "eslint": "7.4.0",
     "eslint-config-prettier": "6.11.0",
     "expect": "26.1.0",
