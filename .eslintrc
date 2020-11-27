@@ -1,10 +1,8 @@
 {
-	"parser": "babel-eslint",
-	"extends": ["eslint:recommended", "eslint-config-prettier"],
-	"rules": {
-		"semi": ["error", "never"]
-	},
-	"env": {
-		"browser": true
-	}
+  "parser": "babel-eslint",
+  "plugins": ["jest"],
+  "extends": ["eslint:recommended", "eslint-config-prettier", "plugin:jest/recommended"],
+  "env": {
+	"es6": true
+  }
 }
