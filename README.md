@@ -105,4 +105,4 @@ MIT (http://www.opensource.org/licenses/mit-license.php)
 [npm-version-image]: https://img.shields.io/npm/v/redux-profiler.svg?style=flat
 [npm-downloads-image]: https://img.shields.io/npm/dm/redux-profiler.svg?style=flat
 [codecov-url]: https://codecov.io/gh/bhovhannes/redux-profiler
-[codecov-image]: https://img.shields.io/codecov/c/github/bhovhannes/redux-profiler.svg
+[codecov-image]: https://codecov.io/gh/bhovhannes/redux-profiler/branch/master/graph/badge.svg?token=iJvUUKrgzB
