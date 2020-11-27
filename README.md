@@ -1,6 +1,6 @@
 # redux-profiler
 
-[![NPM version][npm-version-image]][npm-url] [![NPM downloads][npm-downloads-image]][npm-url] [![Dependencies][deps-image]][deps-url] [![Dev. Dependencies][dev-deps-image]][dev-deps-url] [![MIT License][license-image]][license-url] [![Build Status][travis-image]][travis-url] [![Coverage][codecov-image]][codecov-url]
+[![NPM version][npm-version-image]][npm-url] [![NPM downloads][npm-downloads-image]][npm-url] [![MIT License][license-image]][license-url] [![Coverage][codecov-image]][codecov-url]
 
 A Redux [store enhancer](https://redux.js.org/glossary#store-enhancer) which uses User Timing API to profile Redux actions and time spent on notifying store listeners
 
@@ -99,16 +99,10 @@ const store = createStore(
 
 MIT (http://www.opensource.org/licenses/mit-license.php)
 
-[deps-image]: https://img.shields.io/david/bhovhannes/redux-profiler.svg
-[deps-url]: https://david-dm.org/bhovhannes/redux-profiler
-[dev-deps-image]: https://img.shields.io/david/dev/bhovhannes/redux-profiler.svg
-[dev-deps-url]: https://david-dm.org/bhovhannes/redux-profiler#info=devDependencies
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
 [npm-url]: https://www.npmjs.org/package/redux-profiler
 [npm-version-image]: https://img.shields.io/npm/v/redux-profiler.svg?style=flat
 [npm-downloads-image]: https://img.shields.io/npm/dm/redux-profiler.svg?style=flat
-[travis-url]: https://travis-ci.com/bhovhannes/redux-profiler
-[travis-image]: https://img.shields.io/travis/bhovhannes/redux-profiler.svg?style=flat
 [codecov-url]: https://codecov.io/gh/bhovhannes/redux-profiler
 [codecov-image]: https://img.shields.io/codecov/c/github/bhovhannes/redux-profiler.svg

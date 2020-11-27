@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel'
+import babel from '@rollup/plugin-babel'
 
 export default {
 	input: 'src/index.js',
@@ -6,16 +6,17 @@ export default {
 		{
 			file: './dist/redux-profiler.umd.js',
 			format: 'umd',
-			name: 'ReduxProfiler'
+			name: 'ReduxProfiler',
 		},
 		{
 			file: './dist/redux-profiler.esm.js',
-			format: 'esm'
-		}
+			format: 'esm',
+		},
 	],
 	plugins: [
 		babel({
-			exclude: 'node_modules/**'
-		})
-	]
+			exclude: 'node_modules/**',
+			babelHelpers: 'bundled',
+		}),
+	],
 }

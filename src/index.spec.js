@@ -1,22 +1,19 @@
-/*eslint-env mocha */
+import {describe, it, expect} from '@jest/globals'
 import profileStore from './index'
-import should from 'should'
-import sinon from 'sinon'
-
 
 function createStoreShape() {
 	return {
-		dispatch: sinon.spy(),
-		subscribe: sinon.spy()
+		dispatch: jest.fn(),
+		subscribe: jest.fn(),
 	}
 }
 
 function createPerformanceStub() {
 	return {
-		mark: sinon.spy(),
-		measure: sinon.spy(),
-		clearMarks: sinon.spy(),
-		clearMeasures: sinon.spy()
+		mark: jest.fn(),
+		measure: jest.fn(),
+		clearMarks: jest.fn(),
+		clearMeasures: jest.fn(),
 	}
 }
 
@@ -24,7 +21,7 @@ function createProfiledStore() {
 	const baseStore = createStoreShape()
 	const createStore = () => baseStore
 	const profiledStore = profileStore({
-		performance: createPerformanceStub()
+		performance: createPerformanceStub(),
 	})(createStore)()
 	profiledStore.base = baseStore
 
@@ -33,34 +30,34 @@ function createProfiledStore() {
 
 describe('profileStore()', () => {
 	it('batch callback executes listeners', () => {
-		const subscribeCallbackSpy = sinon.spy()
+		const subscribeCallbackSpy = jest.fn()
 		const store = createProfiledStore()
 
 		store.subscribe(subscribeCallbackSpy)
-		store.dispatch({ type: 'foo' })
+		store.dispatch({type: 'foo'})
 
-		should(store.base.subscribe.called).false()
-		should(subscribeCallbackSpy.callCount).equal(1)
+		expect(store.base.subscribe).not.toHaveBeenCalled()
+		expect(subscribeCallbackSpy).toHaveBeenCalledTimes(1)
 	})
 
 	it('unsubscribes batch callbacks', () => {
-		const subscribeCallbackSpy = sinon.spy()
+		const subscribeCallbackSpy = jest.fn()
 		const store = createProfiledStore()
 		const unsubscribe = store.subscribe(subscribeCallbackSpy)
 
 		unsubscribe()
 
-		store.dispatch({ type: 'foo' })
+		store.dispatch({type: 'foo'})
 
-		should(subscribeCallbackSpy.called).false()
+		expect(subscribeCallbackSpy).not.toHaveBeenCalled()
 	})
 
-	it('should support removing a subscription within a subscription', () => {
+	it('supports removing a subscription within a subscription', () => {
 		const store = createProfiledStore()
 
-		const listenerA = sinon.spy()
-		const listenerB = sinon.spy()
-		const listenerC = sinon.spy()
+		const listenerA = jest.fn()
+		const listenerB = jest.fn()
+		const listenerC = jest.fn()
 
 		store.subscribe(listenerA)
 		const unSubB = store.subscribe(() => {
@@ -72,15 +69,15 @@ describe('profileStore()', () => {
 		store.dispatch({})
 		store.dispatch({})
 
-		should(listenerA.callCount).equal(2)
-		should(listenerB.callCount).equal(1)
-		should(listenerC.callCount).equal(2)
+		expect(listenerA).toHaveBeenCalledTimes(2)
+		expect(listenerB).toHaveBeenCalledTimes(1)
+		expect(listenerC).toHaveBeenCalledTimes(2)
 	})
 
 	it('only removes listener once when unsubscribe is called', () => {
 		const store = createProfiledStore()
-		const listenerA = sinon.stub().returns({})
-		const listenerB = sinon.stub().returns({})
+		const listenerA = jest.fn().mockReturnValue({})
+		const listenerB = jest.fn().mockReturnValue({})
 
 		const unsubscribeA = store.subscribe(listenerA)
 		store.subscribe(listenerB)
@@ -88,48 +85,48 @@ describe('profileStore()', () => {
 		unsubscribeA()
 		unsubscribeA()
 
-		store.dispatch({ type: 'foo' })
-		should(listenerA.called).false()
-		should(listenerB.callCount).equal(1)
+		store.dispatch({type: 'foo'})
+		expect(listenerA).not.toHaveBeenCalled()
+		expect(listenerB).toHaveBeenCalledTimes(1)
 	})
 
 	it('delays unsubscribe until the end of current dispatch', () => {
 		const store = createProfiledStore()
 
 		const unsubscribeHandles = []
-		const doUnsubscribeAll = () => unsubscribeHandles.forEach(
-			unsubscribe => unsubscribe()
-		)
+		const doUnsubscribeAll = () => unsubscribeHandles.forEach((unsubscribe) => unsubscribe())
 
-		const listener1 = sinon.stub().returns({})
-		const listener2 = sinon.stub().returns({})
-		const listener3 = sinon.stub().returns({})
+		const listener1 = jest.fn().mockReturnValue({})
+		const listener2 = jest.fn().mockReturnValue({})
+		const listener3 = jest.fn().mockReturnValue({})
 
 		unsubscribeHandles.push(store.subscribe(() => listener1()))
-		unsubscribeHandles.push(store.subscribe(() => {
-			listener2()
-			doUnsubscribeAll()
-		}))
+		unsubscribeHandles.push(
+			store.subscribe(() => {
+				listener2()
+				doUnsubscribeAll()
+			})
+		)
 
 		unsubscribeHandles.push(store.subscribe(() => listener3()))
 
-		store.dispatch({ type: 'foo' })
-		should(listener1.callCount).equal(1)
-		should(listener2.callCount).equal(1)
-		should(listener3.callCount).equal(1)
+		store.dispatch({type: 'foo'})
+		expect(listener1).toHaveBeenCalledTimes(1)
+		expect(listener2).toHaveBeenCalledTimes(1)
+		expect(listener3).toHaveBeenCalledTimes(1)
 
-		store.dispatch({ type: 'foo' })
-		should(listener1.callCount).equal(1)
-		should(listener2.callCount).equal(1)
-		should(listener3.callCount).equal(1)
+		store.dispatch({type: 'foo'})
+		expect(listener1).toHaveBeenCalledTimes(1)
+		expect(listener2).toHaveBeenCalledTimes(1)
+		expect(listener3).toHaveBeenCalledTimes(1)
 	})
 
 	it('delays subscribe until the end of current dispatch', () => {
 		const store = createProfiledStore()
 
-		const listener1 = sinon.stub().returns({})
-		const listener2 = sinon.stub().returns({})
-		const listener3 = sinon.stub().returns({})
+		const listener1 = jest.fn().mockReturnValue({})
+		const listener2 = jest.fn().mockReturnValue({})
+		const listener3 = jest.fn().mockReturnValue({})
 
 		let listener3Added = false
 		const maybeAddThirdListener = () => {
@@ -145,77 +142,69 @@ describe('profileStore()', () => {
 			maybeAddThirdListener()
 		})
 
-		store.dispatch({ type: 'foo' })
-		should(listener1.callCount).equal(1)
-		should(listener2.callCount).equal(1)
-		should(listener3.callCount).equal(0)
+		store.dispatch({type: 'foo'})
+		expect(listener1).toHaveBeenCalledTimes(1)
+		expect(listener2).toHaveBeenCalledTimes(1)
+		expect(listener3).toHaveBeenCalledTimes(0)
 
-		store.dispatch({ type: 'foo' })
-		should(listener1.callCount).equal(2)
-		should(listener2.callCount).equal(2)
-		should(listener3.callCount).equal(1)
+		store.dispatch({type: 'foo'})
+		expect(listener1).toHaveBeenCalledTimes(2)
+		expect(listener2).toHaveBeenCalledTimes(2)
+		expect(listener3).toHaveBeenCalledTimes(1)
 	})
 
 	it('uses the last snapshot of subscribers during nested dispatch', () => {
 		const store = createProfiledStore()
 
-		const listener1 = sinon.stub().returns({})
-		const listener2 = sinon.stub().returns({})
-		const listener3 = sinon.stub().returns({})
-		const listener4 = sinon.stub().returns({})
+		const listener1 = jest.fn().mockReturnValue({})
+		const listener2 = jest.fn().mockReturnValue({})
+		const listener3 = jest.fn().mockReturnValue({})
+		const listener4 = jest.fn().mockReturnValue({})
 
 		let unsubscribe4
 		const unsubscribe1 = store.subscribe(() => {
 			listener1()
-			should(listener1.callCount).equal(1)
-			should(listener2.callCount).equal(0)
-			should(listener3.callCount).equal(0)
-			should(listener4.callCount).equal(0)
+			expect(listener1).toHaveBeenCalledTimes(1)
+			expect(listener2).not.toHaveBeenCalled()
+			expect(listener3).not.toHaveBeenCalled()
+			expect(listener4).not.toHaveBeenCalled()
 
 			unsubscribe1()
 			unsubscribe4 = store.subscribe(listener4)
-			store.dispatch({ type: 'foo' })
+			store.dispatch({type: 'foo'})
 
-			should(listener1.callCount).equal(1)
-			should(listener2.callCount).equal(1)
-			should(listener3.callCount).equal(1)
-			should(listener4.callCount).equal(1)
+			expect(listener1).toHaveBeenCalledTimes(1)
+			expect(listener2).toHaveBeenCalledTimes(1)
+			expect(listener3).toHaveBeenCalledTimes(1)
+			expect(listener4).toHaveBeenCalledTimes(1)
 		})
 
 		store.subscribe(listener2)
 		store.subscribe(listener3)
 
-		store.dispatch({ type: 'foo' })
-		should(listener1.callCount).equal(1)
-		should(listener2.callCount).equal(2)
-		should(listener3.callCount).equal(2)
-		should(listener4.callCount).equal(1)
+		store.dispatch({type: 'foo'})
+		expect(listener1).toHaveBeenCalledTimes(1)
+		expect(listener2).toHaveBeenCalledTimes(2)
+		expect(listener3).toHaveBeenCalledTimes(2)
+		expect(listener4).toHaveBeenCalledTimes(1)
 
 		unsubscribe4()
-		store.dispatch({ type: 'foo' })
-		should(listener1.callCount).equal(1)
-		should(listener2.callCount).equal(3)
-		should(listener3.callCount).equal(3)
-		should(listener4.callCount).equal(1)
+		store.dispatch({type: 'foo'})
+		expect(listener1).toHaveBeenCalledTimes(1)
+		expect(listener2).toHaveBeenCalledTimes(3)
+		expect(listener3).toHaveBeenCalledTimes(3)
+		expect(listener4).toHaveBeenCalledTimes(1)
 	})
 
 	it('throws if listener is not a function', () => {
 		const store = createProfiledStore()
 
-		should(() =>
-			store.subscribe()
-		).throw()
+		expect(() => store.subscribe()).toThrow()
 
-		should(() =>
-			store.subscribe('')
-		).throw()
+		expect(() => store.subscribe('')).toThrow()
 
-		should(() =>
-			store.subscribe(null)
-		).throw()
+		expect(() => store.subscribe(null)).toThrow()
 
-		should(() =>
-			store.subscribe(undefined)
-		).throw()
+		expect(() => store.subscribe(undefined)).toThrow()
 	})
 })

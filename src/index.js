@@ -1,3 +1,4 @@
+/*eslint-env browser*/
 const PROFILER_MARK_TYPE_REDUCE = 'reduce'
 const PROFILER_MARK_TYPE_NOTIFY = 'notify'
 
@@ -25,7 +26,7 @@ function getMarkInfo(action) {
 	return {
 		name,
 		type,
-		isAnonymous
+		isAnonymous,
 	}
 }
 
@@ -62,7 +63,7 @@ export default function profileStore(options = {}) {
 			return markName
 		}
 
-		return function(markInfo, markType, op) {
+		return function (markInfo, markType, op) {
 			const counterDelta = markInfo.isAnonymous ? 1 : 0
 			counter += counterDelta
 			const markName = getMarkName(markInfo)
@@ -114,10 +115,10 @@ export default function profileStore(options = {}) {
 
 	function notifyListeners() {
 		const listeners = (currentListeners = nextListeners)
-		listeners.forEach(listener => listener())
+		listeners.forEach((listener) => listener())
 	}
 
-	return next => (...args) => {
+	return (next) => (...args) => {
 		const store = next(...args)
 
 		if (typeof performance === 'undefined') {
@@ -154,7 +155,7 @@ export default function profileStore(options = {}) {
 		return {
 			...store,
 			dispatch,
-			subscribe
+			subscribe,
 		}
 	}
 }
