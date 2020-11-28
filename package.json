@@ -36,7 +36,7 @@
 	},
 	"homepage": "https://github.com/bhovhannes/redux-profiler#readme",
 	"devDependencies": {
-		"@babel/core": "7.12.7",
+		"@babel/core": "7.12.9",
 		"@babel/preset-env": "7.12.7",
 		"@jest/globals": "26.6.2",
 		"@rollup/plugin-babel": "5.2.1",
