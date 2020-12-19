@@ -37,7 +37,7 @@
 	"homepage": "https://github.com/bhovhannes/redux-profiler#readme",
 	"devDependencies": {
 		"@babel/core": "7.12.10",
-		"@babel/preset-env": "7.12.10",
+		"@babel/preset-env": "7.12.11",
 		"@jest/globals": "26.6.2",
 		"@rollup/plugin-babel": "5.2.2",
 		"babel-eslint": "10.1.0",
