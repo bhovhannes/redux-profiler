@@ -37,7 +37,7 @@
 	"homepage": "https://github.com/bhovhannes/redux-profiler#readme",
 	"devDependencies": {
 		"@arkweid/lefthook": "0.7.2",
-		"@babel/core": "7.13.13",
+		"@babel/core": "7.13.14",
 		"@babel/preset-env": "7.13.12",
 		"@bhovhannes/shared-config": "0.0.1",
 		"@jest/globals": "26.6.2",
