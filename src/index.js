@@ -8,32 +8,26 @@ const END = MARK_NAME_DELIMITER + 'end'
 
 function getMarkInfo(action) {
 	let name = 'UNKNOWN_ACTION'
-	let isAnonymous = true
 	let type = 'unknown'
 	if (isReduxAction(action)) {
 		name = action.type
 		type = ''
-		isAnonymous = false
 	} else if (isReduxThunkAction(action)) {
 		type = 'thunk'
 		if (action.name) {
 			name = action.name
-			isAnonymous = false
 		} else {
 			name = 'anonymous'
 		}
 	}
 	return {
 		name,
-		type,
-		isAnonymous,
+		type
 	}
 }
 
 function getMarkLabel(markInfo, profilerMarkType) {
-	return `\u267B ${markInfo.name} (${
-		markInfo.type.length > 0 ? markInfo.type : profilerMarkType
-	})`
+	return `\u267B ${markInfo.name} (${markInfo.type.length > 0 ? markInfo.type : profilerMarkType})`
 }
 
 function isReduxThunkAction(action) {
@@ -53,10 +47,10 @@ export default function profileStore(options = {}) {
 	}
 
 	const performProfiledOperation = (() => {
-		let counter = 0
+		let counter = {}
 
 		function getMarkName(markInfo) {
-			let markName = markInfo.name + MARK_NAME_DELIMITER + counter
+			let markName = markInfo.name + MARK_NAME_DELIMITER + counter[markInfo.name]
 			if (markInfo.type.length > 0) {
 				markName += MARK_NAME_DELIMITER + markInfo.type
 			}
@@ -64,8 +58,7 @@ export default function profileStore(options = {}) {
 		}
 
 		return function (markInfo, markType, op) {
-			const counterDelta = markInfo.isAnonymous ? 1 : 0
-			counter += counterDelta
+			counter[markInfo.name] = counter[markInfo.name] === undefined ? 0 : counter[markInfo.name] + 1
 			const markName = getMarkName(markInfo)
 			performance.mark(markName + START)
 			const res = op()
@@ -75,7 +68,11 @@ export default function profileStore(options = {}) {
 			performance.clearMarks(markName + START)
 			performance.clearMarks(markName + END)
 			performance.clearMeasures(getMarkLabel(markInfo, markType))
-			counter -= counterDelta
+			if (counter[markInfo.name]) {
+				counter[markInfo.name]--
+			} else {
+				delete counter[markInfo.name]
+			}
 
 			return res
 		}
@@ -118,44 +115,39 @@ export default function profileStore(options = {}) {
 		listeners.forEach((listener) => listener())
 	}
 
-	return (next) => (...args) => {
-		const store = next(...args)
+	return (next) =>
+		(...args) => {
+			const store = next(...args)
 
-		if (typeof performance === 'undefined') {
-			return store
-		}
+			if (typeof performance === 'undefined') {
+				return store
+			}
 
-		function dispatch(action) {
-			const info = getMarkInfo(action)
-			const res = performProfiledOperation(
-				getMarkInfo(action),
-				PROFILER_MARK_TYPE_REDUCE,
-				() => {
+			function dispatch(action) {
+				const info = getMarkInfo(action)
+				const res = performProfiledOperation(getMarkInfo(action), PROFILER_MARK_TYPE_REDUCE, () => {
 					if (info.type === 'thunk') {
-						const reduxThunkExtraArgument = store.dispatch(
-							(d, s, extraArgument) => extraArgument
-						)
+						const reduxThunkExtraArgument = store.dispatch((d, s, extraArgument) => extraArgument)
 						return action(dispatch, store.getState, reduxThunkExtraArgument)
 					} else {
 						return store.dispatch(action)
 					}
-				}
-			)
+				})
 
-			// thunk should not notify listeners but rather just dispatch other actions
-			if (info.type !== 'thunk') {
-				performProfiledOperation(getMarkInfo(action), PROFILER_MARK_TYPE_NOTIFY, () =>
-					notifyListeners()
-				)
+				// thunk should not notify listeners but rather just dispatch other actions
+				if (info.type !== 'thunk') {
+					performProfiledOperation(getMarkInfo(action), PROFILER_MARK_TYPE_NOTIFY, () =>
+						notifyListeners()
+					)
+				}
+
+				return res
 			}
 
-			return res
+			return {
+				...store,
+				dispatch,
+				subscribe
+			}
 		}
-
-		return {
-			...store,
-			dispatch,
-			subscribe,
-		}
-	}
 }
