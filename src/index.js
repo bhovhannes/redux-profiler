@@ -69,7 +69,7 @@ export default function profileStore(options = {}) {
 			performance.clearMarks(markName + END)
 			performance.clearMeasures(getMarkLabel(markInfo, markType))
 			counter[markInfo.name]--
-			if (!counter[markInfo.name]) {
+			if (counter[markInfo.name] <= 0) {
 				delete counter[markInfo.name]
 			}
 
