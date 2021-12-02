@@ -1,10 +1,10 @@
-import {describe, it, expect} from '@jest/globals'
+import { describe, it, expect } from '@jest/globals'
 import profileStore from './index'
 
 function createStoreShape() {
 	return {
 		dispatch: jest.fn(),
-		subscribe: jest.fn(),
+		subscribe: jest.fn()
 	}
 }
 
@@ -13,7 +13,7 @@ function createPerformanceStub() {
 		mark: jest.fn(),
 		measure: jest.fn(),
 		clearMarks: jest.fn(),
-		clearMeasures: jest.fn(),
+		clearMeasures: jest.fn()
 	}
 }
 
@@ -21,7 +21,7 @@ function createProfiledStore() {
 	const baseStore = createStoreShape()
 	const createStore = () => baseStore
 	const profiledStore = profileStore({
-		performance: createPerformanceStub(),
+		performance: createPerformanceStub()
 	})(createStore)()
 	profiledStore.base = baseStore
 
@@ -29,12 +29,51 @@ function createProfiledStore() {
 }
 
 describe('profileStore()', () => {
+	it('returns a new store if a valid performance object is passed', () => {
+		const baseStore = createStoreShape()
+		const createStore = () => baseStore
+		const profiledStore = profileStore({
+			performance: createPerformanceStub()
+		})(createStore)()
+		expect(profiledStore).not.toBe(baseStore)
+		expect(typeof profiledStore.dispatch).toBe('function')
+		expect(typeof profiledStore.subscribe).toBe('function')
+	})
+
+	it('is a noop (returns the same store) if invalid performance object is passed', () => {
+		const baseStore = createStoreShape()
+		const createStore = () => baseStore
+		const profiledStore1 = profileStore({
+			performance: {
+				print: () => {}
+			}
+		})(createStore)()
+		expect(profiledStore1).toBe(baseStore)
+
+		const profiledStore2 = profileStore({
+			performance: {
+				mark: () => {}
+			}
+		})(createStore)()
+		expect(profiledStore2).toBe(baseStore)
+
+		const profiledStore3 = profileStore({
+			performance: {
+				mark: () => {},
+				measure: false,
+				clearMarks: () => {},
+				clearMeasures: () => {}
+			}
+		})(createStore)()
+		expect(profiledStore3).toBe(baseStore)
+	})
+
 	it('batch callback executes listeners', () => {
 		const subscribeCallbackSpy = jest.fn()
 		const store = createProfiledStore()
 
 		store.subscribe(subscribeCallbackSpy)
-		store.dispatch({type: 'foo'})
+		store.dispatch({ type: 'foo' })
 
 		expect(store.base.subscribe).not.toHaveBeenCalled()
 		expect(subscribeCallbackSpy).toHaveBeenCalledTimes(1)
@@ -47,7 +86,7 @@ describe('profileStore()', () => {
 
 		unsubscribe()
 
-		store.dispatch({type: 'foo'})
+		store.dispatch({ type: 'foo' })
 
 		expect(subscribeCallbackSpy).not.toHaveBeenCalled()
 	})
@@ -85,7 +124,7 @@ describe('profileStore()', () => {
 		unsubscribeA()
 		unsubscribeA()
 
-		store.dispatch({type: 'foo'})
+		store.dispatch({ type: 'foo' })
 		expect(listenerA).not.toHaveBeenCalled()
 		expect(listenerB).toHaveBeenCalledTimes(1)
 	})
@@ -110,12 +149,12 @@ describe('profileStore()', () => {
 
 		unsubscribeHandles.push(store.subscribe(() => listener3()))
 
-		store.dispatch({type: 'foo'})
+		store.dispatch({ type: 'foo' })
 		expect(listener1).toHaveBeenCalledTimes(1)
 		expect(listener2).toHaveBeenCalledTimes(1)
 		expect(listener3).toHaveBeenCalledTimes(1)
 
-		store.dispatch({type: 'foo'})
+		store.dispatch({ type: 'foo' })
 		expect(listener1).toHaveBeenCalledTimes(1)
 		expect(listener2).toHaveBeenCalledTimes(1)
 		expect(listener3).toHaveBeenCalledTimes(1)
@@ -142,12 +181,12 @@ describe('profileStore()', () => {
 			maybeAddThirdListener()
 		})
 
-		store.dispatch({type: 'foo'})
+		store.dispatch({ type: 'foo' })
 		expect(listener1).toHaveBeenCalledTimes(1)
 		expect(listener2).toHaveBeenCalledTimes(1)
 		expect(listener3).toHaveBeenCalledTimes(0)
 
-		store.dispatch({type: 'foo'})
+		store.dispatch({ type: 'foo' })
 		expect(listener1).toHaveBeenCalledTimes(2)
 		expect(listener2).toHaveBeenCalledTimes(2)
 		expect(listener3).toHaveBeenCalledTimes(1)
@@ -171,7 +210,7 @@ describe('profileStore()', () => {
 
 			unsubscribe1()
 			unsubscribe4 = store.subscribe(listener4)
-			store.dispatch({type: 'foo'})
+			store.dispatch({ type: 'foo' })
 
 			expect(listener1).toHaveBeenCalledTimes(1)
 			expect(listener2).toHaveBeenCalledTimes(1)
@@ -182,14 +221,14 @@ describe('profileStore()', () => {
 		store.subscribe(listener2)
 		store.subscribe(listener3)
 
-		store.dispatch({type: 'foo'})
+		store.dispatch({ type: 'foo' })
 		expect(listener1).toHaveBeenCalledTimes(1)
 		expect(listener2).toHaveBeenCalledTimes(2)
 		expect(listener3).toHaveBeenCalledTimes(2)
 		expect(listener4).toHaveBeenCalledTimes(1)
 
 		unsubscribe4()
-		store.dispatch({type: 'foo'})
+		store.dispatch({ type: 'foo' })
 		expect(listener1).toHaveBeenCalledTimes(1)
 		expect(listener2).toHaveBeenCalledTimes(3)
 		expect(listener3).toHaveBeenCalledTimes(3)

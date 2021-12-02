@@ -38,12 +38,24 @@ function isReduxAction(action) {
 	return action !== null && typeof action === 'object' && action.type
 }
 
+function isValidPerformanceObject(perf) {
+	return (
+		perf &&
+		typeof perf === 'object' &&
+		['mark', 'measure', 'clearMarks', 'clearMeasures'].every((fn) => typeof perf[fn] === 'function')
+	)
+}
+
 export default function profileStore(options = {}) {
 	let performance
 	if (options.performance) {
 		performance = options.performance
 	} else if (typeof window !== 'undefined') {
 		performance = window.performance
+	}
+
+	if (!isValidPerformanceObject(performance)) {
+		performance = undefined
 	}
 
 	const performProfiledOperation = (() => {
