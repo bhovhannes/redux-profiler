@@ -8,6 +8,7 @@
 		"dist/*"
 	],
 	"scripts": {
+		"prepublishOnly": "npm run build",
 		"build": "rollup --config",
 		"watch": "npm run build -- -w",
 		"format": "prettier --write **/*.{js,css,md}",
