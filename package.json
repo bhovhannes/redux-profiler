@@ -38,9 +38,9 @@
 	"homepage": "https://github.com/bhovhannes/redux-profiler#readme",
 	"devDependencies": {
 		"@arkweid/lefthook": "0.7.7",
-		"@babel/core": "7.16.0",
-		"@babel/eslint-parser": "7.16.3",
-		"@babel/preset-env": "7.16.4",
+		"@babel/core": "7.16.5",
+		"@babel/eslint-parser": "7.16.5",
+		"@babel/preset-env": "7.16.5",
 		"@bhovhannes/shared-config": "0.0.1",
 		"@jest/globals": "27.4.4",
 		"@rollup/plugin-babel": "5.3.0",
