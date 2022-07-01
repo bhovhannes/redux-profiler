@@ -3,25 +3,25 @@ name: Checks
 on: [push, workflow_dispatch, pull_request]
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 14.x
-            - run: npm ci
-            - run: npm run build
-            - run: npm run test:sources -- --ci
-            - uses: codecov/codecov-action@v3
-              with:
-                  directory: ./coverage/
-                  fail_ci_if_error: true
-                  path_to_write_report: ./coverage/codecov_report.txt
-    lint:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
-            - run: npm ci
-            - run: npm run lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:sources -- --ci
+      - uses: codecov/codecov-action@v3
+        with:
+          directory: ./coverage/
+          fail_ci_if_error: true
+          path_to_write_report: ./coverage/codecov_report.txt
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm ci
+      - run: npm run lint
