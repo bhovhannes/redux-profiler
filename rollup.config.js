@@ -1,3 +1,4 @@
+/*eslint-env node*/
 const babel = require('@rollup/plugin-babel')
 
 module.exports = {
