@@ -43,7 +43,7 @@
 		"@bhovhannes/shared-config": "0.0.1",
 		"@evilmartians/lefthook": "1.2.2",
 		"@jest/globals": "29.3.1",
-		"@rollup/plugin-babel": "6.0.2",
+		"@rollup/plugin-babel": "6.0.3",
 		"eslint": "8.28.0",
 		"eslint-config-prettier": "8.5.0",
 		"eslint-plugin-jest": "27.1.5",
