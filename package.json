@@ -39,7 +39,7 @@
 	"devDependencies": {
 		"@babel/core": "7.22.1",
 		"@babel/eslint-parser": "7.21.8",
-		"@babel/preset-env": "7.22.2",
+		"@babel/preset-env": "7.22.4",
 		"@bhovhannes/shared-config": "0.0.1",
 		"@evilmartians/lefthook": "1.4.1",
 		"@jest/globals": "29.5.0",
