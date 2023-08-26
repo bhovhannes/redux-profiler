@@ -42,7 +42,7 @@
 		"@babel/preset-env": "7.22.10",
 		"@bhovhannes/shared-config": "0.0.1",
 		"@evilmartians/lefthook": "1.4.9",
-		"@jest/globals": "29.6.2",
+		"@jest/globals": "29.6.4",
 		"@rollup/plugin-babel": "6.0.3",
 		"eslint": "8.47.0",
 		"eslint-config-prettier": "9.0.0",
