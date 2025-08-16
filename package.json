@@ -41,7 +41,7 @@
 		"@babel/eslint-parser": "7.28.0",
 		"@babel/preset-env": "7.28.0",
 		"@bhovhannes/shared-config": "0.0.1",
-		"@evilmartians/lefthook": "1.12.2",
+		"@evilmartians/lefthook": "1.12.3",
 		"@jest/globals": "30.0.5",
 		"@rollup/plugin-babel": "6.0.4",
 		"eslint": "8.57.1",
