@@ -37,9 +37,9 @@
 	},
 	"homepage": "https://github.com/bhovhannes/redux-profiler#readme",
 	"devDependencies": {
-		"@babel/core": "7.28.5",
-		"@babel/eslint-parser": "7.28.5",
-		"@babel/preset-env": "7.28.5",
+		"@babel/core": "7.28.6",
+		"@babel/eslint-parser": "7.28.6",
+		"@babel/preset-env": "7.28.6",
 		"@bhovhannes/shared-config": "0.0.1",
 		"@evilmartians/lefthook": "2.0.13",
 		"@jest/globals": "30.2.0",
