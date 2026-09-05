@@ -44,7 +44,7 @@
 		"@evilmartians/lefthook": "2.1.12",
 		"@jest/globals": "30.5.0",
 		"@rollup/plugin-babel": "7.1.0",
-		"eslint": "8.57.1",
+		"eslint": "10.10.0",
 		"eslint-config-prettier": "10.1.8",
 		"eslint-plugin-jest": "29.16.6",
 		"jest": "30.5.0",
