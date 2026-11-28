@@ -46,7 +46,7 @@
 		"@rollup/plugin-babel": "7.1.0",
 		"eslint": "8.57.1",
 		"eslint-config-prettier": "10.1.9",
-		"eslint-plugin-jest": "29.17.1",
+		"eslint-plugin-jest": "29.17.2",
 		"jest": "30.5.0",
 		"npm-run-all2": "9.1.0",
 		"prettier": "3.9.10",
